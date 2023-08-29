@@ -24,7 +24,8 @@
       "dotnetRunMessages": true,
       "launchBrowser": true,
       "launchUrl": "swagger",
-      "applicationUrl": "https://localhost:7114;http://localhost:5087",
+      "applicationUrl": "https://localhost:7000;http://localhost:5087", //aca defino desde donde quiero que empiece mi puerto
+      //"applicationUrl": "https://localhost:7114;http://localhost:5087", //aca defino desde donde quiero que empiece mi puerto
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }

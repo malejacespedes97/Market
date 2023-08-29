@@ -15,6 +15,10 @@ builder.Services.AddSwaggerGen();
 //x => x. significa lambda
 builder.Services.AddDbContext<DataContext>(x => x.UseSqlServer("name=DefaultConnection")); //cadena de conexión
 
+builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localhost:8000") });
+//cambia desde la palabra services, cuando ejecute la web, recibira los parametros
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
