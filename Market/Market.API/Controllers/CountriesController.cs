@@ -14,11 +14,11 @@ namespace Market.API.Controllers
     //El nombre puede quedar en minuscula,es por una regla de Camelcase (cuando declaro una clave inicio con una palabra Mayuscula)
     //La ruta va responder a la ruta que siempre va a responder a la ruta que se ejecuta en el navegador, es decir Api/Countries
 
-    
-    public class CountriesController: ControllerBase
+
+    public class CountriesController : ControllerBase
     {
         private readonly DataContext _context;
-        
+
         public CountriesController(DataContext context)
         {
 
@@ -31,8 +31,8 @@ namespace Market.API.Controllers
         U->[HTTPPut]
         D->[HTTPDelete]*/
 
-        [HttpGet]
-        public async Task <ActionResult> Get() 
+        [HttpGet]//get por lista
+        public async Task<ActionResult> Get()
         {
             return Ok(await _context.Countries.ToListAsync());
         }
@@ -42,13 +42,52 @@ namespace Market.API.Controllers
         Ejemplo:  public async tast <actionresult>
         TODOS los metos los debermos convertir a asincronos*/
 
-        [HttpPost]
+        [HttpGet("{id}")]//get por parametro
+        public async Task<ActionResult> Get(int id)
+        {
+           var country= await _context.Countries.FirstOrDefaultAsync(x=>x.Id==id); 
+           if (country==null) { 
+                return NotFound();
+            }
+           return Ok(country);
+        }
+
+
+
+        [HttpPost]// post -Create
         public async Task<ActionResult> Post(Country country) //siempre los post son iguales, solo cambia el nombre de la entidad
         {
 
             _context.Add(country);
                 await _context.SaveChangesAsync();        
             return Ok(country);    
+        }
+
+        // Put-- update
+        [HttpPut]
+        public async Task<ActionResult> Put(Country country)
+        {
+
+            _context.Update(country);
+            await _context.SaveChangesAsync();
+            return Ok(country);
+        }
+
+
+        [HttpDelete("{id:int}")]
+        public async Task<ActionResult> Delete(int id)
+        {
+
+            var filaafectada = await _context.Countries
+                .Where(x => x.Id == id)
+                .ExecuteDeleteAsync();
+
+            if (filaafectada == 0)
+            {
+                 return NotFound();
+            }
+
+                 return NoContent();
         }
     }
 }

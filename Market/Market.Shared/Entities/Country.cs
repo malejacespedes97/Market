@@ -15,7 +15,7 @@ namespace Market.Shared.Entities
         [Display (Name="Pais")]//tooltip
         [MaxLength (100)]
         [Required  (ErrorMessage ="El campo {0} es obligatorio")] //El campo cero hace referencia al nombre
-        public string Name { get; set; } = null;
+        public string Name { get; set; } = null!;
 
 
 
